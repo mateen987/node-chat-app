@@ -17,12 +17,13 @@ io.on('connection',(socket)=>{
     console.log('new user connected');
 
     socket.emit('newMessage', generateMessage('admin', 'welcome to chat app'));
-    socket.broadcast.emit('newMessage', generateMessage('admin', 'new user message'));
+    socket.broadcast.emit('newMessage', generateMessage('admin', 'new user joined'));
 
-       socket.on('createMessage',(message)=>{
+       socket.on('createMessage',(message ,callback)=>{
         console.log('message created', message);
 
         io.emit('newMessage',generateMessage(message.from,message.text))
+        callback('this is from the server');
 
     });
 
